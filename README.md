@@ -48,7 +48,7 @@ on:
     types: [synchronize]
 
 jobs:
-  bt:
+  checkrun-timechart:
     runs-on: ubuntu-latest
     steps:
       - name: wait
