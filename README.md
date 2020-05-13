@@ -35,6 +35,7 @@ This action can be run as the last step in a workflow:
         uses: urcomputeringpal/checkrun-timechart-action@master
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
 ```
@@ -62,6 +63,7 @@ jobs:
         uses: urcomputeringpal/checkrun-timechart-action@master
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
 ```
