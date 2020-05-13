@@ -4,45 +4,26 @@ A GitHub Action that displays a timechart of CheckRuns related to a given sha. U
 ## Example output
 
 ```
-[    5.000s ] ├──┤                                                                             * YAMBURGER
-33
-[    0.000s ]  .                                                                               * kubevalidator
-34
-[    8.000s ]             ├────┤                                                               * kubectl-diff (code)
-35
-[    7.000s ]             ├───┤                                                                * kubectl-diff (cameras)
-36
-[   10.000s ]               ├──────┤                                                           * kubectl-diff (geryon)
-37
-[   10.000s ]               ├──────┤                                                           * kubectl-diff (kubernetes-dashboard)
-38
-[    0.000s ]               .                                                                  * deploy-label
-39
-[   80.762s ]                ├───────────────────────────────────────────────────────────────┤ * bt
-40
-[    0.000s ]                .                                                                 * deploy
-41
-[    0.000s ]                .                                                                 * kubectl-apply
-42
-[    0.000s ]                .                                                                 * required-builds
-43
-[    8.000s ]                         ├────┤                                                   * kubectl-diff (home-assistant)
-44
-[    8.000s ]                         ├────┤                                                   * kubectl-diff (motion)
-45
-[   11.000s ]                           ├──────┤                                               * kubectl-diff (kube-system)
-46
-[    8.000s ]                           ├────┤                                                 * kubectl-diff (mysql)
-47
-[    6.000s ]                                     ├──┤                                         * kubectl-diff (unifi)
-48
-[    0.000s ]                                                     .                            * diff
-49
+[    5.000s ] ├──┤                                                       * YAMBURGER
+[    0.000s ]  .                                                         * kubevalidator
+[    8.000s ]             ├────┤                                         * kubectl-diff (code)
+[    7.000s ]             ├───┤                                          * kubectl-diff (cameras)
+[   10.000s ]               ├──────┤                                     * kubectl-diff (geryon)
+[   10.000s ]               ├──────┤                                     * kubectl-diff (kubernetes-dashboard)
+[    0.000s ]               .                                            * deploy-label
+[   80.762s ]                ├─────────────────────────────────────────┤ * bt
+[    0.000s ]                .                                           * deploy
+[    0.000s ]                .                                           * kubectl-apply
+[    0.000s ]                .                                           * required-builds
+[    8.000s ]                         ├────┤                             * kubectl-diff (home-assistant)
+[    8.000s ]                         ├────┤                             * kubectl-diff (motion)
+[   11.000s ]                           ├──────┤                         * kubectl-diff (kube-system)
+[    8.000s ]                           ├────┤                           * kubectl-diff (mysql)
+[    6.000s ]                                     ├──┤                   * kubectl-diff (unifi)
+[    0.000s ]                                                     .      * diff
 
-50
      one '.' unit is less than:    1.249s
-51
-                    total time:   99.975s
+                    total time:   71.522s
 ```
 
 ## Usage
