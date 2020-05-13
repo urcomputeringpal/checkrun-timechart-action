@@ -103,8 +103,8 @@ bt_start () {
     else
         timestamp=$(date '+%s%N' -d "$2")
     fi
-    echo "$caller $1" > $BT_DIR/bt.$desc_checksum.$timestamp
-    ln -s $BT_DIR/bt.$desc_checksum.$timestamp $BT_DIR/bt.$desc_checksum || {
+    echo "$caller $1" > $BT_DIR/$desc_checksum.$timestamp
+    ln -s $BT_DIR/$desc_checksum.$timestamp $BT_DIR/$desc_checksum || {
       echo "FAIL: entry already exists for '$1' ($desc_checksum)"
       exit 1
     }
@@ -122,9 +122,9 @@ bt_end () {
     local caller="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
     local desc_checksum=$(echo "$1" | cksum | awk '{print $1}')
     if [ -z "$2" ]; then
-        echo "$(date '+%s%N') $caller $1" >> $BT_DIR/bt.$desc_checksum
+        echo "$(date '+%s%N') $caller $1" >> $BT_DIR/$desc_checksum
     else
-        echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/bt.$desc_checksum
+        echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/$desc_checksum
     fi
   fi
 }
