@@ -2,6 +2,8 @@ export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
 . /app/bt.sh
 
+rm -f /tmp/bt*
+
 # Initialize a trace a short while in the past
 bt_init "${INPUT_TRACE_START:-$TRACE_START}"
 
