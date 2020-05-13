@@ -32,7 +32,7 @@ This action can be run as the last step in a workflow:
 
 ```yaml
       - name: checkrun-timechart
-        uses: urcomputeringpal/checkrun-timechart-action@master
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.3
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: checkrun-timechart
-        uses: urcomputeringpal/checkrun-timechart-action@master
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.3
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
