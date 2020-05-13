@@ -1,0 +1,19 @@
+name: CheckRun Timechart
+description: A GitHub Action that displays a timechart of CheckRuns related to a given sha. Useful for debugging the performance of GitHub Actions workflows
+branding:
+  icon: 'activity'
+  color: 'gray-dark'
+inputs:
+  GITHUB_TOKEN:
+    description: 'Github token for the repository'
+    required: true
+  SHA:
+    description: The SHA to check
+    required: true
+  TRACE_START:
+    description: The time from which to start the trace
+    required: true
+
+runs:
+  using: docker
+  image: 'docker://urcomputeringpal/checkrun-timechart-action:latest'
