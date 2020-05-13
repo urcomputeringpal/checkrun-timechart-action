@@ -52,7 +52,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-        id: waitforstatuschecks
         uses: "WyriHaximus/github-action-wait-for-status@4c9e58820905eb246e88a413c39a9104cccf7e80"
         with:
           ignoreActions: checkrun-timechart
