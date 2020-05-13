@@ -27,9 +27,9 @@ bt_init () {
     export BT_INIT="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
     export BT_DIR="$(mktemp -d /tmp/bt-$$-XXXXXXX)"
     if [ -z "$1" ]; then
-        date '+%s%N' > $BT_DIR/bt.START
+        date '+%s%N' > $BT_DIR/START
     else
-        date '+%s%N' -d "$1" > $BT_DIR/bt.START
+        date '+%s%N' -d "$1" > $BT_DIR/START
     fi
 
     # only trace CPU if mpstat seems to be available
@@ -54,9 +54,9 @@ bt_cleanup () {
       wait $BT_CPUSAMPLE_PID 2>/dev/null || true
     fi
     if [ -z "$1" ]; then
-        date '+%s%N' > $BT_DIR/bt.END
+        date '+%s%N' > $BT_DIR/END
     else
-        date '+%s%N' -d "$1" > $BT_DIR/bt.END
+        date '+%s%N' -d "$1" > $BT_DIR/END
     fi
     if [ -z "$BT_DISABLED" -o "$BT_DISABLED" = "0" ]; then bt_report; fi
 
