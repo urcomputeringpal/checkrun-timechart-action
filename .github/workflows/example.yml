@@ -1,7 +1,6 @@
 name: example
 on:
-  pull_request:
-    types: [synchronize]
+  push:
 
 jobs:
   ten:
