@@ -1,6 +1,9 @@
 name: example
 on:
-  push:
+  pull_request:
+    types:
+      - labeled
+      - synchronize
 
 jobs:
   ten:
@@ -28,5 +31,5 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          SHA: "${{ github.event.pull_request.head.sha }}"
+          SHA: "$GITHUB_SHA"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
