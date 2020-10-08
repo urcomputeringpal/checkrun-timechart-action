@@ -16,6 +16,11 @@ jobs:
     steps:
       - run: sleep 5
 
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo a duplicate
+
   checkrun-timechart:
     runs-on: ubuntu-latest
     steps:
@@ -35,4 +40,12 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           SHA: "${{ github.event.pull_request.head.sha }}"
+          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+
+      - name: checkrun-timechart-github-sha
+        uses: ./
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          SHA: "${{ github.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
