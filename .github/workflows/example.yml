@@ -16,11 +16,6 @@ jobs:
     steps:
       - run: sleep 5
 
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo a duplicate
-
   checkrun-timechart:
     runs-on: ubuntu-latest
     steps:
