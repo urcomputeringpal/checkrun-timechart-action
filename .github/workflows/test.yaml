@@ -1,6 +1,7 @@
-name: test-push
+name: test
 on:
-  push:
+  pull_request:
+    types: [synchronize]
 
 jobs:
   example:
@@ -26,5 +27,5 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          SHA: "${{ github.sha }}"
-          TRACE_START: "${{ github.event.repository.pushed_at }}"
+          SHA: "${{ github.event.pull_request.head.sha }}"
+          TRACE_START: "${{ github.event.pull_request.updated_at }}"
