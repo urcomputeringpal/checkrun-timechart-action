@@ -26,8 +26,16 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: checkrun-timechart
+      - name: checkrun-timechart-release
         uses: urcomputeringpal/checkrun-timechart-action@v0.0.4
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          SHA: "$GITHUB_SHA"
+          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+
+      - name: checkrun-timechart-dev
+        uses: ./
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
