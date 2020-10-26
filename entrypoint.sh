@@ -1,3 +1,10 @@
+#!/bin/bash
+
+if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
+    echo "Neither INPUT_SHA or GITHUB_SHA present" 2>&1
+    exit 1
+fi
+
 export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
 . /app/bt.sh
