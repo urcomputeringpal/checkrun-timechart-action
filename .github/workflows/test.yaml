@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  example:
+  slow-thing:
     runs-on: ubuntu-latest
     steps:
       - run: echo examples should be visible
