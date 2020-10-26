@@ -36,6 +36,7 @@ jobs:
         uses: ./
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          BT_DEBUG: "1"
 
   pull_request:
     if: github.event_name == 'pull_request'
