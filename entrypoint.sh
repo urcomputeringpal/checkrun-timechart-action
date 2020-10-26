@@ -34,4 +34,5 @@ do
 done < /tmp/checkruns
 
 # display the results
-bt_cleanup
+now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+bt_cleanup "$now"
