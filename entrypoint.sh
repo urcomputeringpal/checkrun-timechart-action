@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
     echo "Neither INPUT_SHA or GITHUB_SHA present" 2>&1
