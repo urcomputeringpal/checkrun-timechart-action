@@ -13,7 +13,8 @@ export BT_SMALLSTATS=1
 rm -f /tmp/bt*
 
 # Initialize a trace a short while in the past
-bt_init "${INPUT_TRACE_START}"
+now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+bt_init "${INPUT_TRACE_START:-$now}"
 
 curl -s \
     -H "Authorization: token ${GITHUB_TOKEN}" \

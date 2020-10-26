@@ -27,7 +27,7 @@ bt_init () {
     export BT_INIT="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
     export BT_DIR="$(mktemp -d /tmp/bt-$$-XXXXXXX)"
     if [ -z "$1" ]; then
-        date -u '+%s%N' > $BT_DIR/START
+        date '+%s%N' > $BT_DIR/START
     else
         date '+%s%N' -d "$1" > $BT_DIR/START
     fi
