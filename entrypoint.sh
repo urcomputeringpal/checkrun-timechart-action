@@ -12,9 +12,13 @@ export BT_SMALLSTATS=1
 
 rm -f /tmp/bt*
 
-# Initialize a trace a short while in the past
-now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-bt_init "${INPUT_TRACE_START:-$now}"
+curl \
+    -H "Authorization: token ${GITHUB_TOKEN}" \
+    -H "Accept: application/vnd.github.v3+json" \
+    https://api.github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} \ |
+    jq -r '.created_at' > /tmp/trace_start
+created_at=$(cat /tmp/trace_start)
+bt_init "${INPUT_TRACE_START:-$created_at}"
 
 curl -s \
     -H "Authorization: token ${GITHUB_TOKEN}" \
