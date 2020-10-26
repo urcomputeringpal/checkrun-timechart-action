@@ -5,13 +5,13 @@ export BT_SMALLSTATS=1
 rm -f /tmp/bt*
 
 # Initialize a trace a short while in the past
-bt_init "${INPUT_TRACE_START:-$TRACE_START}"
+bt_init "${INPUT_TRACE_START}"
 
 curl -s \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
-    "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$SHA}/check-runs" \ |
+    "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" \ |
     jq -r '.check_runs[] | [.started_at, .completed_at, .name, .check_suite.id] | @tsv' | \
     sort -n > /tmp/checkruns
 

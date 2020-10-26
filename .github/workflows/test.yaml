@@ -1,8 +1,13 @@
 name: test
 on:
+  push:
   pull_request:
     types:
       - opened
+      - labeled
+      - unlabeled
+      - closed
+      - reopened
       - synchronize
 
 jobs:
@@ -10,20 +15,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo examples should be visible
+      - run: sleep 5
 
   docker:
     runs-on: ubuntu-latest
     steps:
       - run: echo duplicate job names should not cause failure
 
-  checkrun-timechart:
+  push:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - uses: actions/checkout@v2
+      - name: checkrun-timechart-github
+        uses: ./
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  pull_request:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: checkrun-timechart-github
         uses: ./
         env:

@@ -9,10 +9,8 @@ inputs:
     required: true
   SHA:
     description: The SHA to check
-    required: true
   TRACE_START:
     description: The time from which to start the trace
-    required: true
 
 runs:
   using: 'docker'
