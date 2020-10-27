@@ -10,7 +10,7 @@ jobs:
       - name: wait
         uses: "WyriHaximus/github-action-wait-for-status@v1.2"
         with:
-          ignoreActions: checkrun-timechart
+          ignoreActions: delayed_example
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
