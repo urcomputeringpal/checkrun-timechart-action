@@ -55,4 +55,4 @@ last_completed=$(cat /tmp/checkruns.json | \
     head -n 1)
 bt_cleanup "${last_completed}"
 
-# find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1-t cat
+find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
