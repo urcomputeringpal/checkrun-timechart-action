@@ -38,5 +38,6 @@ do
 done < /tmp/checkruns
 
 # display the results
-last=$(tail -n 1 /tmp/checkruns | cut -f 2)
-bt_cleanup "$last"
+last=$(tail -n 1 /tmp/checkruns | cut -f 4)
+last_started=$(tail -n 1 /tmp/checkruns | cut -f 1)
+bt_cleanup "${last:-$last_started}"
