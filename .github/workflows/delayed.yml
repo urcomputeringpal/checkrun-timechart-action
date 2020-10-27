@@ -19,6 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
+          WARNING: "true"
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
 

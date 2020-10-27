@@ -36,11 +36,11 @@ This action can be run as the last step in a workflow:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          SHA: "${{ github.event.pull_request.head.sha }}"
-          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+          # Optionally output the timechart as a warning annotation
+          # WARNING: "true"
 ```
 
-OR as a separate workflow entirely using a preceeding step that waits for other CheckRuns to complete:
+OR as a separate workflow entirely using a preceding step that waits for other CheckRuns to complete:
 
 ```yaml
 name: checkrun-timechart
