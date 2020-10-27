@@ -255,7 +255,7 @@ bt_report () {
     if [ -s "$m" -a $(wc -l $m | awk '{print $1}') -eq 2 ]; then
       m_end_ms=$(($(tail -n +2 $m | awk '{print $1}') / 1000000))
     else
-      m_desc="$m_desc (not yet completed?)"
+      m_desc="$m_desc (tracepoint end failed)"
       m_failed=1
     fi
     local m_time_ms=$((m_end_ms - $m_start_ms))
@@ -310,7 +310,7 @@ bt_report () {
      "$(yes "$m_bar" 2> /dev/null | head -n $m_num_middle_units | tr -d '\n')" \
      "$m_bar_end" \
      "$(yes ' ' 2> /dev/null | head -n $m_num_end_units | tr -d '\n')" \
-     "$m_desc"
+     "$(echo $m_desc | awk '{print $1}')"
   done
 
   printf "\n"
