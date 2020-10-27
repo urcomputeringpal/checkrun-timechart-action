@@ -19,9 +19,10 @@ curl -s \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
-    "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" \ |
+    "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" | \
+    tee /tmp/checkruns.json | \
     jq -r '.check_runs[] | [.started_at, .id, .name, .conclusion, .completed_at] | @tsv' | \
-    sort -n > /tmp/checkruns
+    sort -n > /tmp/checkruns.tsv
 
 first=$(head -n 1 /tmp/checkruns | cut -f 1)
 bt_init "${INPUT_TRACE_START:-$first}"
@@ -43,9 +44,11 @@ do
     if [ -n "$completed_at" ]; then
         bt_end "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$completed_at"
     fi
-done < /tmp/checkruns
+done < /tmp/checkruns.tsv
 
 # display the results
-last=$(tail -n 1 /tmp/checkruns | cut -f 5)
-last_started=$(tail -n 1 /tmp/checkruns | cut -f 1)
-bt_cleanup "${last:-$last_started}"
+last_completed=$(cat /tmp/checkruns.json | \
+    jq -r '.check_runs[] | [.completed_at] | @tsv' | \
+    grep -Eo '[0-9]' | \
+    sort -rn | head -n 1)
+bt_cleanup "${last_completed}"
