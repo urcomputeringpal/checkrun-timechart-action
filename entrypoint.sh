@@ -49,10 +49,10 @@ done < /tmp/checkruns.tsv
 # display the results
 last_completed=$(cat /tmp/checkruns.json | \
     jq -r '.check_runs[] | [.completed_at] | @tsv' | \
-    grep -Eo '[0-9]+' | \
+    grep -E '[0-9]' | \
     sort -rn | \
     tee /tmp/completed_at.tsv | \
     head -n 1)
 bt_cleanup "${last_completed}"
 
-find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
+# find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
