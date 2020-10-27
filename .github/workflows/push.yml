@@ -1,15 +1,6 @@
 name: push
 on:
   push:
-  pull_request:
-    types:
-      - opened
-      - labeled
-      - unlabeled
-      - closed
-      - reopened
-      - synchronize
-  workflow_dispatch:
 
 jobs:
   slow_example:
