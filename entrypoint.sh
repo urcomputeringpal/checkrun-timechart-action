@@ -9,6 +9,7 @@ fi
 export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
 . /app/bt.sh
+. /app/lib.sh
 
 rm -f /tmp/bt*
 
@@ -53,6 +54,11 @@ last_completed=$(cat /tmp/checkruns.json | \
     sort -rn | \
     tee /tmp/completed_at.tsv | \
     head -n 1)
-bt_cleanup "${last_completed}"
+
+if [ -n "$INPUT_WARNING" ]; then
+    echo "::warning ::$(escapeData "$(bt_cleanup "${last_completed}")")"
+else
+    bt_cleanup "${last_completed}"
+fi
 
 # find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
