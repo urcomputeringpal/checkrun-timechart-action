@@ -28,8 +28,8 @@ while IFS="" read -r checkrun || [ -n "$checkrun" ]
 do
     name=$(echo "$checkrun" | cut -f 3)
     id=$(echo "$checkrun" | cut -f 4)
-    bt_start "$name-$id" "$(echo "$checkrun" | cut -f 1)"
-    bt_end "$name-$id" "$(echo "$checkrun" | cut -f 2)"
+    bt_start "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$(echo "$checkrun" | cut -f 1)"
+    bt_end "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$(echo "$checkrun" | cut -f 2)"
 done < /tmp/checkruns
 
 # display the results
