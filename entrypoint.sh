@@ -12,6 +12,9 @@ export BT_SMALLSTATS=1
 
 rm -f /tmp/bt*
 
+# Account for replication delay
+sleep $INPUT_DELAY
+
 curl -s \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     -H "Content-Type: application/json" \

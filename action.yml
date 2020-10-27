@@ -9,8 +9,13 @@ inputs:
     required: true
   SHA:
     description: The SHA to check
+    required: false
   TRACE_START:
     description: The time from which to start the trace
+    required: false
+  DELAY:
+    description: The amount of time to wait before querying the GitHub API.
+    default: "5"
 
 runs:
   using: 'docker'
