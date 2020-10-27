@@ -1,0 +1,24 @@
+name: delayed
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  delayed_example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: wait
+        uses: "WyriHaximus/github-action-wait-for-status@v1.2"
+        with:
+          ignoreActions: delayed_example
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/checkout@v2
+      - name: checkrun-timechart
+        uses: ./
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          SHA: "${{ github.event.pull_request.head.sha }}"
+          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+
