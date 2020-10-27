@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: checkrun-timechart-release
-        uses: urcomputeringpal/checkrun-timechart-action@v0.0.4
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
@@ -41,6 +41,3 @@ jobs:
         uses: ./
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          SHA: "${{ github.sha }}"
-          TRACE_START: "${{ github.event.pull_request.updated_at }}"
