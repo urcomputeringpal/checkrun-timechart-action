@@ -9,6 +9,7 @@ fi
 export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
 . /app/bt.sh
+. /app/lib.sh
 
 rm -f /tmp/bt*
 
@@ -25,6 +26,17 @@ curl -s \
     sort -n > /tmp/checkruns.tsv
 
 first=$(head -n 1 /tmp/checkruns.tsv | cut -f 1)
+last=$(cat /tmp/checkruns.json | \
+    jq -r '.check_runs[] | [.completed_at] | @tsv' | \
+    grep -E '[0-9]' | \
+    sort -rn | \
+    tee /tmp/completed_at.tsv | \
+    head -n 1)
+
+if [ -n "$BT_DEBUG" ]; then
+    find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
+fi
+
 bt_init "${INPUT_TRACE_START:-$first}"
 
 # Record traces for each completed check run
@@ -47,12 +59,9 @@ do
 done < /tmp/checkruns.tsv
 
 # display the results
-last_completed=$(cat /tmp/checkruns.json | \
-    jq -r '.check_runs[] | [.completed_at] | @tsv' | \
-    grep -E '[0-9]' | \
-    sort -rn | \
-    tee /tmp/completed_at.tsv | \
-    head -n 1)
-bt_cleanup "${last_completed}"
 
-# find /tmp -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
+if [ -n "$INPUT_WARNING" ]; then
+    echo "::warning ::$(escapeData "$(bt_cleanup "${last}")")"
+else
+    bt_cleanup "${last}"
+fi
