@@ -40,9 +40,9 @@ do
         continue
     fi
 
-    bt_start "$name\thttps://github.com/${GITHUB_REPOSITORY}/runs/$id" "$started_at"
+    bt_start "$name\\thttps://github.com/${GITHUB_REPOSITORY}/runs/$id" "$started_at"
     if [ -n "$completed_at" ]; then
-        bt_end "$name\thttps://github.com/${GITHUB_REPOSITORY}/runs/$id" "$completed_at"
+        bt_end "$name\\thttps://github.com/${GITHUB_REPOSITORY}/runs/$id" "$completed_at"
     fi
 done < /tmp/checkruns.tsv
 
