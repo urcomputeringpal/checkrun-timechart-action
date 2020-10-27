@@ -1,0 +1,43 @@
+name: example
+on:
+  pull_request:
+    types:
+      - labeled
+      - synchronize
+
+jobs:
+  ten:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 10
+
+  five:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 5
+
+  checkrun-timechart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: checkrun-timechart-release
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          SHA: "${{ github.event.pull_request.head.sha }}"
+          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+
+      - name: checkrun-timechart-dev
+        uses: ./
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          SHA: "${{ github.event.pull_request.head.sha }}"
+          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+
+      - name: checkrun-timechart-github-sha
+        uses: ./
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
