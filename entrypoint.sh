@@ -15,19 +15,13 @@ rm -f /tmp/bt*
 curl -s \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     -H "Content-Type: application/json" \
-    -H "Accept: application/vnd.github.v3+json" \
-    "https://api.github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \ |
-    jq -r '.created_at' > /tmp/trace_start
-created_at=$(cat /tmp/trace_start)
-bt_init "${INPUT_TRACE_START:-$created_at}"
-
-curl -s \
-    -H "Authorization: token ${GITHUB_TOKEN}" \
-    -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" \ |
     jq -r '.check_runs[] | [.started_at, .completed_at, .name, .check_suite.id] | @tsv' | \
     sort -n > /tmp/checkruns
+
+first=$(head -n 1 /tmp/checkruns | cut -f 1)
+bt_init "${INPUT_TRACE_START:-$first}"
 
 # Record traces for each completed check run
 while IFS="" read -r checkrun || [ -n "$checkrun" ]
@@ -39,5 +33,5 @@ do
 done < /tmp/checkruns
 
 # display the results
-now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-bt_cleanup "$now"
+last=$(tail -n 1 /tmp/checkruns | cut -f 2)
+bt_cleanup "$last"
