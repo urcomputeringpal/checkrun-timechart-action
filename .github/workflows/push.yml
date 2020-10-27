@@ -1,22 +1,20 @@
-name: test
+name: push
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
 
 jobs:
-  example:
+  slow_example:
     runs-on: ubuntu-latest
     steps:
-      - run: echo examples should be visible
+      - run: echo things that take a second or two should show up
+      - run: sleep 5
 
-  docker:
+  test:
     runs-on: ubuntu-latest
     steps:
       - run: echo duplicate job names should not cause failure
 
-  checkrun-timechart:
+  push:
     runs-on: ubuntu-latest
     steps:
       - name: context
@@ -28,6 +26,4 @@ jobs:
         uses: ./
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          SHA: "${{ github.event.pull_request.head.sha }}"
-          TRACE_START: "${{ github.event.pull_request.updated_at }}"
+
