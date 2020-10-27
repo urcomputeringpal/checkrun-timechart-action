@@ -1,24 +1,27 @@
-name: delayed
+name: pull_request
 on:
   pull_request:
-    types: [synchronize]
+    types:
+      - opened
+      - labeled
+      - unlabeled
+      - closed
+      - reopened
+      - synchronize
 
 jobs:
-  delayed_example:
+  pull_request:
     runs-on: ubuntu-latest
     steps:
-      - name: wait
-        uses: "WyriHaximus/github-action-wait-for-status@v1.2"
-        with:
-          ignoreActions: checkrun-timechart
+      - name: context
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - uses: actions/checkout@v2
-      - name: checkrun-timechart
+      - name: checkrun-timechart-github
         uses: ./
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
-

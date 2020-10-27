@@ -1,4 +1,4 @@
-name: test
+name: push
 on:
   push:
   pull_request:
@@ -12,19 +12,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  slow-thing:
+  slow_example:
     runs-on: ubuntu-latest
     steps:
-      - run: echo examples should be visible
+      - run: echo things that take a second or two should show up
       - run: sleep 5
 
-  docker:
+  test:
     runs-on: ubuntu-latest
     steps:
       - run: echo duplicate job names should not cause failure
 
   push:
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: context
@@ -37,19 +36,3 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-  pull_request:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - uses: actions/checkout@v2
-      - name: checkrun-timechart-github
-        uses: ./
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          SHA: "${{ github.event.pull_request.head.sha }}"
-          TRACE_START: "${{ github.event.pull_request.updated_at }}"
