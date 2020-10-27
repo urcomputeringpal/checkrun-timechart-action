@@ -32,7 +32,7 @@ This action can be run as the last step in a workflow:
 
 ```yaml
       - name: checkrun-timechart
-        uses: urcomputeringpal/checkrun-timechart-action@v0.0.4
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
@@ -53,14 +53,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-        uses: "WyriHaximus/github-action-wait-for-status@4c9e58820905eb246e88a413c39a9104cccf7e80"
+        uses: "WyriHaximus/github-action-wait-for-status@v1.2"
         with:
           ignoreActions: checkrun-timechart
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: checkrun-timechart
-        uses: urcomputeringpal/checkrun-timechart-action@v0.0.4
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:

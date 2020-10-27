@@ -121,11 +121,7 @@ bt_end () {
   if [ -z "$BT_DISABLED" -o "$BT_DISABLED" = "0" ]; then
     local caller="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
     local desc_checksum=$(echo "$1" | cksum | awk '{print $1}')
-    if [ -z "$2" ]; then
-        echo "$(date '+%s%N') $caller $1" >> $BT_DIR/$desc_checksum
-    else
-        echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/$desc_checksum
-    fi
+    echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/$desc_checksum
   fi
 }
 export -f bt_end
@@ -314,7 +310,7 @@ bt_report () {
      "$(yes "$m_bar" 2> /dev/null | head -n $m_num_middle_units | tr -d '\n')" \
      "$m_bar_end" \
      "$(yes ' ' 2> /dev/null | head -n $m_num_end_units | tr -d '\n')" \
-     "$m_desc"
+     "$(echo $m_desc | awk '{print $1}')"
   done
 
   printf "\n"
