@@ -121,11 +121,7 @@ bt_end () {
   if [ -z "$BT_DISABLED" -o "$BT_DISABLED" = "0" ]; then
     local caller="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
     local desc_checksum=$(echo "$1" | cksum | awk '{print $1}')
-    if [ -z "$2" ]; then
-        echo "$(date '+%s%N') $caller $1" >> $BT_DIR/$desc_checksum
-    else
-        echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/$desc_checksum
-    fi
+    echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/$desc_checksum
   fi
 }
 export -f bt_end
@@ -259,7 +255,7 @@ bt_report () {
     if [ -s "$m" -a $(wc -l $m | awk '{print $1}') -eq 2 ]; then
       m_end_ms=$(($(tail -n +2 $m | awk '{print $1}') / 1000000))
     else
-      m_desc="$m_desc (tracepoint end failed)"
+      m_desc="$m_desc (not yet completed?)"
       m_failed=1
     fi
     local m_time_ms=$((m_end_ms - $m_start_ms))

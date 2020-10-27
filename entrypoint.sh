@@ -40,7 +40,9 @@ do
     fi
 
     bt_start "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$started_at"
-    bt_end "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$completed_at"
+    if [ -n "$completed_at" ]; then
+        bt_end "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$completed_at"
+    fi
 done < /tmp/checkruns
 
 # display the results
