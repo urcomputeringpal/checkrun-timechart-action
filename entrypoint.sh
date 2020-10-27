@@ -20,7 +20,7 @@ curl -s \
     -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" \ |
-    jq -r '.check_runs[] | [.started_at, .id, .name, .completed_at] | @tsv' | \
+    jq -r '.check_runs[] | [.started_at, .id, .name, .conclusion, .completed_at] | @tsv' | \
     sort -n > /tmp/checkruns
 
 first=$(head -n 1 /tmp/checkruns | cut -f 1)
@@ -32,9 +32,15 @@ do
     started_at=$(echo "$checkrun" | cut -f 1)
     id=$(echo "$checkrun" | cut -f 2)
     name=$(echo "$checkrun" | cut -f 3)
-    completed_at=$(echo "$checkrun" | cut -f 4)
+    conclusion=$(echo "$checkrun" | cut -f 4)
+    completed_at=$(echo "$checkrun" | cut -f 5)
+
+    if [ "$conclusion" == "skipped" ]; then
+        continue
+    fi
+
     bt_start "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$started_at"
-    bt_end "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "${completed_at:-$started_at}"
+    bt_end "$name https://github.com/${GITHUB_REPOSITORY}/runs/$id" "$completed_at"
 done < /tmp/checkruns
 
 # display the results
