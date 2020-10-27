@@ -24,7 +24,7 @@ curl -s \
     jq -r '.check_runs[] | [.started_at, .id, .name, .conclusion, .completed_at] | @tsv' | \
     sort -n > /tmp/checkruns.tsv
 
-first=$(head -n 1 /tmp/checkruns | cut -f 1)
+first=$(head -n 1 /tmp/checkruns.tsv | cut -f 1)
 bt_init "${INPUT_TRACE_START:-$first}"
 
 # Record traces for each completed check run
