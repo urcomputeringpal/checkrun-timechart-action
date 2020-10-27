@@ -19,4 +19,4 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://urcomputeringpal/checkrun-timechart-action:v0.0.5'
+  image: 'docker://urcomputeringpal/checkrun-timechart-action:v0.0.6'
