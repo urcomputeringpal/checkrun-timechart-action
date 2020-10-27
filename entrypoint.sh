@@ -17,7 +17,7 @@ curl -s \
     -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" \ |
-    jq -r '.check_runs[] | [.started_at, .completed_at, .name, .check_suite.id] | @tsv' | \
+    jq -r '.check_runs[] | [.started_at, .completed_at, .name, .id] | @tsv' | \
     sort -n > /tmp/checkruns
 
 first=$(head -n 1 /tmp/checkruns | cut -f 1)
