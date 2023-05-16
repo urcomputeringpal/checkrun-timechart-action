@@ -62,7 +62,7 @@ done < /tmp/checkruns.tsv
 
 if [ -n "$INPUT_SUMMARY" ]; then
     output="$(bt_cleanup "${last}")"
-    echo "```\n$(output)\n```" >> "$GITHUB_STEP_SUMMARY"
+    echo -e "\`\`\`\n${output}\n\`\`\`" >> "$GITHUB_STEP_SUMMARY"
 else
     bt_cleanup "${last}"
 fi
