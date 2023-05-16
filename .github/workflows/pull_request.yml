@@ -25,6 +25,7 @@ jobs:
         with:
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
+          DEBUG: "true"
   summary:
     runs-on: ubuntu-latest
     steps:
@@ -41,4 +42,5 @@ jobs:
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
           SUMMARY: "true"
+          DEBUG: "true"
       
