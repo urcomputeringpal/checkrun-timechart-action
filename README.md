@@ -1,4 +1,5 @@
 # checkrun-timechart-action
+
 A GitHub Action that displays a timechart of CheckRuns related to a given sha. Useful for debugging the performance of GitHub Actions workflows. Uses the legendary [`bt.sh`](https://github.com/simonsj/bt.sh) for ASCII timechart display.
 
 ## Example output
@@ -32,12 +33,12 @@ This action can be run as the last step in a workflow:
 
 ```yaml
       - name: checkrun-timechart
-        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.7
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          # Optionally output the timechart as a warning annotation
-          # WARNING: "true"
+          # Optionally output the timechart as a summary
+          # SUMMARY: "true"
 ```
 
 OR as a separate workflow entirely using a preceding step that waits for other CheckRuns to complete:
@@ -60,7 +61,7 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: checkrun-timechart
-        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
+        uses: urcomputeringpal/checkrun-timechart-action@v0.0.7
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:

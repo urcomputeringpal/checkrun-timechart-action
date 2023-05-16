@@ -1,10 +1,15 @@
 #!/bin/bash
 set -e
 
+if [ -n "$INPUT_DEBUG" ]; then
+    set -x
+fi
+
 if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
     echo "Neither INPUT_SHA or GITHUB_SHA present" 2>&1
     exit 1
 fi
+
 
 export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
@@ -60,8 +65,9 @@ done < /tmp/checkruns.tsv
 
 # display the results
 
-if [ -n "$INPUT_WARNING" ]; then
-    echo "::warning ::$(escapeData "$(bt_cleanup "${last}")")"
+if [ -n "$INPUT_SUMMARY" ]; then
+    output="$(bt_cleanup "${last}")"
+    echo -e "\`\`\`\n${output}\n\`\`\`" >> "$GITHUB_STEP_SUMMARY"
 else
     bt_cleanup "${last}"
 fi

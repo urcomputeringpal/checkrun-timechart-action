@@ -1,8 +1,8 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 RUN apt-get update; apt-get -y install \
     curl \
-    jq
+    jq && rm -rf /var/lib/apt/lists/*
 
 ADD *.sh /app/
 
