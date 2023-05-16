@@ -21,6 +21,11 @@ inputs:
     description: Set to a truthy value to output the timechart to \$GITHUB_STEP_SUMMARY
     default: ""
     required: false
+  DEBUG:
+    description: set -x and BT_DEBUG
+    default: ""
+    required: false
+
 
 
 runs:
