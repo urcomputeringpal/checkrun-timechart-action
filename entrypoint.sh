@@ -60,8 +60,9 @@ done < /tmp/checkruns.tsv
 
 # display the results
 
-if [ -n "$INPUT_WARNING" ]; then
-    echo "::warning ::$(escapeData "$(bt_cleanup "${last}")")"
+if [ -n "$INPUT_SUMMARY" ]; then
+    output="$(bt_cleanup "${last}")"
+    echo "```\n$(output)\n```" >> "$GITHUB_STEP_SUMMARY"
 else
     bt_cleanup "${last}"
 fi

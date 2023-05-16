@@ -17,8 +17,9 @@ inputs:
     description: The amount of time to wait before querying the GitHub API.
     default: "5"
     required: false
-  WARNING:
-    description: Set to a truthy value to output the timechart as an annotation at the lowest currently-available log level (warning)
+  SUMMARY:
+    description: Set to a truthy value to output the timechart to \$GITHUB_STEP_SUMMARY
+    default: ""
     required: false
 
 
