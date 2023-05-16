@@ -1,4 +1,5 @@
 # checkrun-timechart-action
+
 A GitHub Action that displays a timechart of CheckRuns related to a given sha. Useful for debugging the performance of GitHub Actions workflows. Uses the legendary [`bt.sh`](https://github.com/simonsj/bt.sh) for ASCII timechart display.
 
 ## Example output
