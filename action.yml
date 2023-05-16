@@ -24,4 +24,4 @@ inputs:
 
 runs:
   using: 'docker'
-  image: 'docker://urcomputeringpal/checkrun-timechart-action:v0.0.6'
+  image: 'docker://ghcr.io/urcomputeringpal/checkrun-timechart-action:v0.0.7'
