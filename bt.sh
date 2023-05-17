@@ -25,7 +25,7 @@ export -f bt_sample_cpu_idle
 bt_init () {
   if [ -z "$BT_INIT" ]; then
     export BT_INIT="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
-    export BT_DIR="$(mktemp -d /tmp/bt-$$-XXXXXXX)"
+    : ${BT_DIR=:"$(mktemp -d /tmp/bt-$$-XXXXXXX)"}
     if [ -z "$1" ]; then
         date '+%s%N' > $BT_DIR/START
     else
