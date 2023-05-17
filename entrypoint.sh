@@ -3,7 +3,7 @@ set -eo pipefail
 
 if [ "${INPUT_DEBUG}" == "true" ]; then
     set -x
-    export BT_DEBUG="true"
+    date
 fi
 
 if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
@@ -40,9 +40,10 @@ last=$(cat ${BT_DIR}/checkruns.json | \
     tee ${BT_DIR}/completed_at.tsv | \
     head -n 1)
 
-if [ -n "$BT_DEBUG" ]; then
+if [ "${INPUT_DEBUG}" == "true" ]; then
     set +e
     find ${BT_DIR} -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
+    date
     set -e
 fi
 
@@ -67,8 +68,11 @@ do
     fi
 done < ${BT_DIR}/checkruns.tsv
 
-# display the results
+if [ "${INPUT_DEBUG}" == "true" ]; then
+    date
+fi
 
+# display the results
 if [ -n "$INPUT_SUMMARY" ]; then
     output="$(bt_cleanup "${last}")"
     echo -e "\`\`\`\n${output}\n\`\`\`" >> "$GITHUB_STEP_SUMMARY"
