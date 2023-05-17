@@ -8,14 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-        uses: "WyriHaximus/github-action-wait-for-status@v1.2"
+        uses: "WyriHaximus/github-action-wait-for-status@ebc1165064712352463678d91eda29e2cc7dbdb5" # v1.7
         with:
           ignoreActions: delayed_example
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - name: checkrun-timechart
         uses: ./
+        timeout-minutes: 1
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:

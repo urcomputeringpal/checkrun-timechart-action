@@ -13,8 +13,8 @@ fi
 
 export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
-. /app/bt.sh
-. /app/lib.sh
+. ./bt.sh
+. ./lib.sh
 
 rm -f /tmp/bt*
 
