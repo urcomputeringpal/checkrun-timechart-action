@@ -36,8 +36,8 @@ runs:
         run: bash ./entrypoint.sh
         env:
           GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-          SHA: ${{ inputs.SHA }}
-          TRACE_START: ${{ inputs.TRACE_START }}
-          DELAY: ${{ inputs.DELAY }}
-          SUMMARY: ${{ inputs.SUMMARY }}
-          DEBUG: ${{ inputs.DEBUG }}
+          INPUT_SHA: ${{ inputs.SHA }}
+          INPUT_TRACE_START: ${{ inputs.TRACE_START }}
+          INPUT_DELAY: ${{ inputs.DELAY }}
+          INPUT_SUMMARY: ${{ inputs.SUMMARY }}
+          INPUT_DEBUG: ${{ inputs.DEBUG }}
