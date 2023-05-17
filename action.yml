@@ -32,4 +32,4 @@ runs:
     using: composite
     steps:
       - shell: bash
-        run: entrypoint.sh
+        run: ${{ github.action_path }}/entrypoint.sh
