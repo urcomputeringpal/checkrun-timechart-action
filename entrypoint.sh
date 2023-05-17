@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-if [ -n "$INPUT_DEBUG" ]; then
+if [ "${INPUT_DEBUG}" == "true" ]; then
     set -x
+    export BT_DEBUG="trie
 fi
 
 if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
