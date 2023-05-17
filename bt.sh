@@ -25,7 +25,7 @@ export -f bt_sample_cpu_idle
 bt_init () {
   if [ -z "$BT_INIT" ]; then
     export BT_INIT="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
-    export BT_DIR="$(mktemp -d /tmp/bt-$$-XXXXXXX)"
+    : ${BT_DIR=:"$(mktemp -d /tmp/bt-$$-XXXXXXX)"}
     if [ -z "$1" ]; then
         date '+%s%N' > $BT_DIR/START
     else
@@ -121,7 +121,13 @@ bt_end () {
   if [ -z "$BT_DISABLED" -o "$BT_DISABLED" = "0" ]; then
     local caller="$(basename ${BASH_SOURCE[1]} 2>/dev/null):${BASH_LINENO[0]}"
     local desc_checksum=$(echo "$1" | cksum | awk '{print $1}')
-    echo "$(date '+%s%N' -d "$2") $caller $1" >> $BT_DIR/$desc_checksum
+    local timestamp
+    if [ -z "$2" ]; then
+        timestamp=$(date '+%s%N')
+    else
+        timestamp=$(date '+%s%N' -d "$2")
+    fi
+    echo "$timestamp $caller $1" >> $BT_DIR/$desc_checksum
   fi
 }
 export -f bt_end
