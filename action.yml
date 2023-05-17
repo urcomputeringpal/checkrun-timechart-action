@@ -29,5 +29,7 @@ inputs:
 
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+    using: composite
+    steps:
+      - shell: bash
+        run: entrypoint.sh
