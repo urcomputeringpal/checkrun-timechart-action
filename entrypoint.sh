@@ -26,6 +26,10 @@ rm -f ${BT_DIR}/bt*
 # Account for replication delay
 sleep $INPUT_DELAY
 
+bt_init "${INPUT_TRACE_START:-$first}"
+
+bt_start "bt.sh"
+
 curl -s --retry 5 --retry-all-errors --retry-max-time 30 \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     -H "Content-Type: application/json" \
@@ -50,7 +54,6 @@ if [ "${INPUT_DEBUG}" == "true" ]; then
     set -e
 fi
 
-bt_init "${INPUT_TRACE_START:-$first}"
 
 # Record traces for each completed check run
 while IFS="" read -r checkrun || [ -n "$checkrun" ]
@@ -74,6 +77,8 @@ done < ${BT_TEMP}/checkruns.tsv
 if [ "${INPUT_DEBUG}" == "true" ]; then
     date
 fi
+
+bt_end "bt.sh"
 
 # display the results
 if [ -n "$INPUT_SUMMARY" ]; then
