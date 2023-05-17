@@ -3,7 +3,7 @@ set -e
 
 if [ "${INPUT_DEBUG}" == "true" ]; then
     set -x
-    export BT_DEBUG="trie
+    export BT_DEBUG="true"
 fi
 
 if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
