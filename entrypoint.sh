@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eo pipefail
 
 if [ "${INPUT_DEBUG}" == "true" ]; then
     set -x
@@ -22,7 +22,7 @@ rm -f /tmp/bt*
 # Account for replication delay
 sleep $INPUT_DELAY
 
-curl -s \
+curl -s --retry 5 --retry-all-errors --retry-max-time 30 \
     -H "Authorization: token ${GITHUB_TOKEN}" \
     -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
