@@ -11,7 +11,10 @@ if [ -z "${INPUT_SHA:-$GITHUB_SHA}" ]; then
     exit 1
 fi
 
-export BT_DIR="$(mktemp -d $RUNNER_TEMP/bt-$$-XXXXXXX)"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+BT_TEMP="${SCRIPT_DIR}/tmp"
+mkdir -p ${BT_TEMP}
+export BT_DIR="$(mktemp -d ${BT_TEMP}/bt-$$-XXXXXXX)"
 
 export BT_DISABLE_CPUSAMPLE=1
 export BT_SMALLSTATS=1
@@ -28,21 +31,21 @@ curl -s --retry 5 --retry-all-errors --retry-max-time 30 \
     -H "Content-Type: application/json" \
     -H "Accept: application/vnd.github.antiope-preview+json" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${INPUT_SHA:-$GITHUB_SHA}/check-runs" | \
-    tee ${BT_DIR}/checkruns.json | \
+    tee ${BT_TEMP}/checkruns.json | \
     jq -r '.check_runs[] | [.started_at, .id, .name, .conclusion, .completed_at] | @tsv' | \
-    sort -n > ${BT_DIR}/checkruns.tsv
+    sort -n > ${BT_TEMP}/checkruns.tsv
 
-first=$(head -n 1 ${BT_DIR}/checkruns.tsv | cut -f 1)
-last=$(cat ${BT_DIR}/checkruns.json | \
+first=$(head -n 1 ${BT_TEMP}/checkruns.tsv | cut -f 1)
+last=$(cat ${BT_TEMP}/checkruns.json | \
     jq -r '.check_runs[] | [.completed_at] | @tsv' | \
     grep -E '[0-9]' | \
     sort -rn | \
-    tee ${BT_DIR}/completed_at.tsv | \
+    tee ${BT_TEMP}/completed_at.tsv | \
     head -n 1)
 
 if [ "${INPUT_DEBUG}" == "true" ]; then
     set +e
-    find ${BT_DIR} -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
+    find ${BT_TEMP} -name '*.tsv' -o -name '*.json' | xargs -n 1 -t cat
     date
     set -e
 fi
@@ -66,7 +69,7 @@ do
     if [ -n "$completed_at" ]; then
         bt_end "$(echo -e "$name\\thttps://github.com/${GITHUB_REPOSITORY}/runs/$id")" "$completed_at"
     fi
-done < ${BT_DIR}/checkruns.tsv
+done < ${BT_TEMP}/checkruns.tsv
 
 if [ "${INPUT_DEBUG}" == "true" ]; then
     date
