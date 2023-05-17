@@ -21,8 +21,9 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: checkrun-timechart-github
+        timeout-minutes: 1
         uses: ./
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

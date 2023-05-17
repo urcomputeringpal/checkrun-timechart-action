@@ -1,0 +1,28 @@
+name: renovate
+on:
+    pull_request:
+    workflow_dispatch: {}
+    schedule:
+        - cron: "0 */6 * * *"
+jobs:
+    renovate:
+        name: Update
+        if: github.event_name != 'pull_request'
+        uses: urcomputeringpal/.github/.github/workflows/renovate.yaml@main
+        with:
+            renovate_app_slug: ur-renovate
+            onboarding: "true"
+        secrets:
+            RENOVATE_APP_ID: ${{ secrets.RENOVATE_APP_ID }}
+            RENOVATE_APP_PEM: ${{ secrets.RENOVATE_APP_PEM }}
+
+    validate:
+        name: Validate
+        if: github.event_name == 'pull_request'
+        uses: urcomputeringpal/.github/.github/workflows/renovate.yaml@main
+        with:
+            renovate_app_slug: ur-renovate
+            dry_run_branch: ${{ github.event.pull_request.head.ref }}
+        secrets:
+            RENOVATE_APP_ID: ${{ secrets.RENOVATE_APP_ID }}
+            RENOVATE_APP_PEM: ${{ secrets.RENOVATE_APP_PEM }}
