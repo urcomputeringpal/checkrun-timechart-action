@@ -19,15 +19,8 @@ jobs:
   checkrun-timechart:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: checkrun-timechart-release
-        uses: urcomputeringpal/checkrun-timechart-action@v0.0.5
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          SHA: "${{ github.event.pull_request.head.sha }}"
-          TRACE_START: "${{ github.event.pull_request.updated_at }}"
 
       - name: checkrun-timechart-dev
         uses: ./
@@ -36,8 +29,4 @@ jobs:
         with:
           SHA: "${{ github.event.pull_request.head.sha }}"
           TRACE_START: "${{ github.event.pull_request.updated_at }}"
-
-      - name: checkrun-timechart-github-sha
-        uses: ./
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          SUMMARY: "true"
