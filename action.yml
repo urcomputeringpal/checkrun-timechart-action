@@ -4,9 +4,6 @@ branding:
   icon: 'activity'
   color: 'gray-dark'
 inputs:
-  GITHUB_TOKEN:
-    description: 'Github token for the repository'
-    required: true
   SHA:
     description: The SHA to check
     required: false
@@ -35,7 +32,6 @@ runs:
         working-directory: ${{ github.action_path }}
         run: bash ./entrypoint.sh
         env:
-          GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
           INPUT_SHA: ${{ inputs.SHA }}
           INPUT_TRACE_START: ${{ inputs.TRACE_START }}
           INPUT_DELAY: ${{ inputs.DELAY }}
