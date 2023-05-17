@@ -34,3 +34,10 @@ runs:
       - shell: bash
         working-directory: ${{ github.action_path }}
         run: bash ./entrypoint.sh
+        env:
+          GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+          SHA: ${{ inputs.SHA }}
+          TRACE_START: ${{ inputs.TRACE_START }}
+          DELAY: ${{ inputs.DELAY }}
+          SUMMARY: ${{ inputs.SUMMARY }}
+          DEBUG: ${{ inputs.DEBUG }}
