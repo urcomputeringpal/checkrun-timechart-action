@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: wait
-        uses: "WyriHaximus/github-action-wait-for-status@ebc1165064712352463678d91eda29e2cc7dbdb5" # v1.7
+        uses: "WyriHaximus/github-action-wait-for-status@c638eadb55e7c6d951b0eb5fff5733569d82b03e" # v1.8
         with:
           ignoreActions: delayed_example
         env:
